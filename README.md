@@ -27,7 +27,9 @@ Start by cloning the repository to your local machine using:
 
 ### Step 3: Frontend set up
 `cd myfront`
+
 `npm install`
+
 `npm run dev`
 
 
