@@ -55,10 +55,10 @@ function SlideImage() {
         style={{ backgroundImage: `url(${slides[currentIndex].url})` }}
         className='w-full h-full rounded-2xl bg-center bg-cover duration-500 relative'
       >
-        <div className='absolute bottom-20 left-4 bg-white/70 text-black px-4 py-2 rounded-full text-3xl font-semibold'>
+        {/* <div className='absolute bottom-20 left-4 bg-white/70 text-black px-4 py-2 rounded-full text-3xl font-semibold'>
           <div>Caption</div>
           <div>{slides[currentIndex].caption}</div>
-        </div>
+        </div> */}
       </div>
 
       <div className='hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer'>

@@ -5,7 +5,7 @@ export const Team = () => {
     <div className="container px-6 py-10 mx-auto">
         <h1 className="text-3xl font-extrabold text-center text-primary capitalize lg:text-3xl dark:text-white mt-24">Our <span className="text-secondary">Executive Team</span></h1>
         <p className="max-w-2xl mx-auto my-6 text-center text-gray-500 dark:text-gray-300">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo incidunt ex placeat modi magni quia error alias, adipisci rem similique, at omnis eligendi optio eos harum.
+            Our team consists of 4 members: Hoang Thao Nguyen, who is responsible for leading the team, Duong Thanh Hai, who handles the model construction, Mai Thanh Hao, who is in charge of data preparation and processing, and Hoang To Uyen, who takes care of website interface development.
         </p>
 
         <div className="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-2">
@@ -20,7 +20,7 @@ export const Team = () => {
                     </div>
                 </div>
 
-                <p className="mt-4 text-gray-500 capitalize dark:text-gray-300 group-hover:text-gray-300">Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum nesciunt officia aliquam neque optio? Cumque facere numquam est.</p>
+                <p className="mt-4 text-gray-500  dark:text-gray-300 group-hover:text-gray-300">Hoàng Thảo Nguyên is the team leader, and I will handle the task of assigning responsibilities to team members and researching model construction.</p>
 
                 <div className="flex mt-4 -mx-2">
                     <a href="/" className="mx-2 text-gray-600 dark:text-gray-300 hover:text-gray-500 dark:hover:text-gray-300 group-hover:text-white" aria-label="Reddit">
@@ -63,7 +63,7 @@ export const Team = () => {
                     </div>
                 </div>
 
-                <p className="mt-4 text-gray-500 capitalize dark:text-gray-300 group-hover:text-gray-300">Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum nesciunt officia aliquam neque optio? Cumque facere numquam est.</p>
+                <p className="mt-4 text-gray-500  dark:text-gray-300 group-hover:text-gray-300">Dương Thanh Hải is responsible for conducting paper research and building models to solve the problem.</p>
 
                 <div className="flex mt-4 -mx-2">
                     <a href="/" className="mx-2 text-gray-600 dark:text-gray-300 hover:text-gray-500 dark:hover:text-gray-300 group-hover:text-white" aria-label="Reddit">
@@ -106,7 +106,7 @@ export const Team = () => {
                     </div>
                 </div>
 
-                <p className="mt-4 text-gray-500 capitalize dark:text-gray-300 group-hover:text-gray-300">Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum nesciunt officia aliquam neque optio? Cumque facere numquam est.</p>
+                <p className="mt-4 text-gray-500 dark:text-gray-300 group-hover:text-gray-300">Mai Thanh Hảo is responsible for data crawling and data preprocessing for model training.</p>
 
                 <div className="flex mt-4 -mx-2">
                     <a href="/" className="mx-2 text-gray-600 dark:text-gray-300 hover:text-gray-500 dark:hover:text-gray-300 group-hover:text-white" aria-label="Reddit">
@@ -149,7 +149,7 @@ export const Team = () => {
                     </div>
                 </div>
 
-                <p className="mt-4 text-gray-500 capitalize dark:text-gray-300 group-hover:text-gray-300">Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum nesciunt officia aliquam neque optio? Cumque facere numquam est.</p>
+                <p className="mt-4 text-gray-500 dark:text-gray-300 group-hover:text-gray-300">Hoàng Tố Uyên is responsible for website development to provide users with a seamless product experience.</p>
 
                 <div className="flex mt-4 -mx-2">
                     <a href="/" className="mx-2 text-gray-600 dark:text-gray-300 hover:text-gray-500 dark:hover:text-gray-300 group-hover:text-white" aria-label="Reddit">

@@ -34,9 +34,8 @@ const Navbar = () => {
                             <img src={logo} className='w-10 inline-block items-center' alt="" />
                             <span>SIGC</span>
                         </a>
-                    </div>
 
-                    <ul className='md:flex space-x-12 hidden navitems font-bold'>
+                        <ul className='md:flex space-x-12 hidden navitems font-bold'>
                         <li className='block hover:text-secondary' >
                             <a href="/">Menu</a>
                         </li>
@@ -44,15 +43,17 @@ const Navbar = () => {
                         <li  className='block hover:text-secondary'>  <a href="/about">About</a></li>
 
                     </ul>
+                    </div>
 
-                    <div className='space-x-4 hidden md:flex items-center flex '>
+
+                    {/* <div className='space-x-4 hidden md:flex items-center flex '>
                         <a href="/login">
                             <button className='ml-3 px-3 rounded-sm py-2 hover:bg-gray-300 focus:shadow-outline focus:outline-none'>Login</button>
                         </a>
                         <a href="/signup" className='hidden lg:flex items-center hover:text-secondary'>
                             <button className='button'>Sign up</button>
                         </a>
-                    </div>
+                    </div> */}
 
                     <div className='md:hidden'>
                         <button onClick={toggleMenu} className='text-white focus:outline-none focus:text-gray-300 text-lg'>

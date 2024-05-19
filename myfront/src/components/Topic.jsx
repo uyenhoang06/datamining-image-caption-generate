@@ -23,7 +23,7 @@ const Topic = () => {
                 
                 className="lg:w-1/4 space-y-6">
                     <h2 className="text-5xl text-primary font-bold "> Image captioning </h2>
-                    <p className='text-base text-tartiary'> Giải thích về cái này giải thích về cái này giải thích về cái này</p>
+                    <p className='text-base text-tartiary'> Image captioning refers to the process of automatically generating descriptive textual captions for images. This task is commonly accomplished using advanced machine learning techniques, particularly deep learning models.</p>
 
                     <Link
                         spy={true}
@@ -46,7 +46,7 @@ const Topic = () => {
                  className='bg-[rgba(255, 255, 255, 0.04)] rounded-[35px] h-96 shadow-3xl p-8 items-center flex justify-center hover:-translate-y-4 transition-all duration-300 cursor-pointer'>
                             <div>
                                 <img src={img_2} alt=""  style={{ width: '150px', height: 'auto' }} />
-                                <h5 className='text-xl font-semibold text-primary px-5 text-center mt-5'> Có ý nghĩa</h5>
+                                <h5 className='text-xl font-semibold text-primary px-5 text-center mt-5'> Assisting the visually impaired</h5>
                             </div>
                         </motion.div>
 
@@ -58,7 +58,7 @@ const Topic = () => {
                         className='bg-[rgba(255, 255, 255, 0.04)] rounded-[35px] h-96 shadow-3xl p-8 items-center flex justify-center hover:-translate-y-4 transition-all duration-300 cursor-pointer mt-16'>
                             <div>
                                 <img src={img_1} alt="" style={{ width: '150px', height: 'auto' }} />
-                                <h5 className='text-xl font-semibold text-primary px-5 text-center mt-5'> Có ý nghĩa</h5>
+                                <h5 className='text-xl font-semibold text-primary px-5 text-center mt-5'> Image search</h5>
                             </div>
                         </motion.div>
 
@@ -70,7 +70,7 @@ const Topic = () => {
                         className='bg-[rgba(255, 255, 255, 0.04)] rounded-[35px] h-96 shadow-3xl p-8 items-center flex justify-center hover:-translate-y-4 transition-all duration-300 cursor-pointer'>
                             <div>
                                 <img src={img_3} alt=""  style={{ width: '150px', height: 'auto' }} />
-                                <h5 className='text-xl font-semibold text-primary px-5 text-center mt-5'> Có ý nghĩa</h5>
+                                <h5 className='text-xl font-semibold text-primary px-5 text-center mt-5'> Image management and organization</h5>
 
 
                             </div>

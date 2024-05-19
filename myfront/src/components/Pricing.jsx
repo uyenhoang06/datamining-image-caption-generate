@@ -9,7 +9,7 @@ const Princing = () => {
 
     const packages = [
         {name: 'Guess', monthlyPrice: 0, yearlyPrice: 0, description: "You can upload image and recive your caption."},
-        {name: 'Member', monthlyPrice: 0, yearlyPrice: 0, description: "You can upload image, recive your caption, see all your images and captions"}
+        {name: 'Member', monthlyPrice: 0, yearlyPrice: 0, description: "You can join the project and complete it with us."}
     ]
 
     return (

@@ -1,12 +1,31 @@
 from flask import request, Flask, jsonify
 from flask_cors import CORS
+from torchvision import transforms
 from werkzeug.utils import secure_filename
 import os
+from transformers import GPT2TokenizerFast, ViTImageProcessor, VisionEncoderDecoderModel
+from torch.utils.data import Dataset
+# from torchtext.data import get_tokenizer
+import requests
+import torch
+import numpy as np
+from PIL import Image
+import pickle
+import matplotlib.pyplot as plt
+import os
+from tqdm import tqdm
 
-UPLOAD_FOLDER = 'E:/Image-Generator_Web/myback/static/uploads/'
+import warnings
+warnings.filterwarnings('ignore')
 
 app = Flask(__name__)
+
+UPLOAD_FOLDER = os.path.join(app.root_path, 'static', 'uploads')
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
 CORS(app, supports_credentials=True)
+
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -17,9 +36,21 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-def predict_caption(index):
-    caption = "Caption" *(index + 2) + \
-        str(index)
+def predict_caption(image):
+    img = Image.open(image)
+
+    model = VisionEncoderDecoderModel.from_pretrained(
+        "nlpconnect/vit-gpt2-image-captioning")
+    image_processor = ViTImageProcessor.from_pretrained(
+        "nlpconnect/vit-gpt2-image-captioning")
+    tokenizer = GPT2TokenizerFast.from_pretrained(
+        "nlpconnect/vit-gpt2-image-captioning")
+
+    pixel_values = image_processor(img, return_tensors="pt").pixel_values
+    generated_ids = model.generate(pixel_values, max_new_tokens=30)
+    caption = tokenizer.batch_decode(
+        generated_ids, skip_special_tokens=True)[0]
+
     return caption
 
 
@@ -38,22 +69,19 @@ def upload_file():
         resp.status_code = 400
         return resp
 
-    files = request.files.getlist('file')  
+    files = request.files.getlist('file')
 
     captions = []
 
-    for i in range(0, len(files)):
-        file = files[i]
-        print(file)
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
+    for img in files:
+        if img and allowed_file(img.filename):
+            filename = secure_filename(img.filename)
             path = os.path.join(UPLOAD_FOLDER, filename)
-            file.save(path)
+            img.save(path)
+            # print(path)
 
-            caption = predict_caption(i)
+            caption = predict_caption(img)
             captions.append(caption)
-
-
 
     resp = jsonify({
         "captions": captions,

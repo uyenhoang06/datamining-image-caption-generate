@@ -29,7 +29,7 @@ const About = () => {
                     viewport={{once:false, amount:0.7}} 
                     className='w-full lg:w-2/5 md:mt-1 relative z-10 white-text'> 
                     <h2 className='md:text-4xl text-3xl font-bold text-primary mb-5 leading-normal'> Our project for  <span className='text-secondary'> Dataming course.</span></h2>
-                    <p className='text-tartiary text-lg mb-7'>We use algorithm</p>
+                    <p className='text-tartiary text-lg mb-7'>We use attention-based encoder-decoder network with transfer learning and LSTM.</p>
 
                     <Link
                         spy={true}

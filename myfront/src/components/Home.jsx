@@ -27,7 +27,7 @@ const Home = () => {
                     
                     className="md:w-3/5">
                         <h2 className="md:text-7xl text-4xl font-bold text-white mb-6 leading-relaxed"> Sport Image Caption Generator</h2>
-                        <p className="text-[#EBEBEB] text-2xl mb-8"> This is paragraph. This is paragraph. This is  paragraph. This is  paragraph. This is paragraph. This is paragraph.</p>
+                        <p className="text-[#EBEBEB] text-2xl mb-8"> Image captioning refers to the process of automatically generating descriptive textual captions for images.</p>
                         
                         <div className="space-x-5 space-y-4">
                             <Link
