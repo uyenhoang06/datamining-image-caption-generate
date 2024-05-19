@@ -280,7 +280,7 @@ const ImageCaptionGenerator = () => {
 
       {showResult && (
         <section className="my-20 flex flex-col w-fit mx-auto my-10 md:px-14 px-4 max-w-screen-2xl sm:px-8 md:px-16 sm:py-8">
-          <h2 className="text-lg font-semibold">Your captions here!</h2>
+          <h2 className="text-center md:text-3xl text-3xl font-extrabold text-primary mb-2 py-6">Here are your captions!</h2>
           <div className=" grid grid-cols-1 md:grid-cols-2 gap-10 py-12 lg:pb-8 lg:pt-10 ">
             {captions.map((caption, index) => (
               <li key={index} className="list-none">
