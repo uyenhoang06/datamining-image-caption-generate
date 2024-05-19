@@ -5,6 +5,8 @@ import Navbar from './components/Navbar.jsx'
 import Footer  from './components/Footer.jsx'
 import About  from './components/About.jsx'
 import Pricing  from './components/Pricing.jsx'
+import SlideImage from './components/SlideImage.jsx';
+
 
 import {useEffect } from "react";
 
@@ -25,7 +27,7 @@ function App() {
   return (
     <div>
       <Navbar/>
-      <Home/> 
+      <SlideImage/>
       <Topic/>
       <About/>
       <Pricing/>

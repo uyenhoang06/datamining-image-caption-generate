@@ -145,7 +145,7 @@ const ImageCaptionGenerator = () => {
   };
 
   return (
-    <div className="bg=gray-50 my-10 md:px-14 px-4 max-w-screen-2xl mx-auto sm:px-8 md:px-16 sm:py-8">
+    <div className="my-10 md:px-14 px-4 max-w-screen-2xl mx-auto sm:px-8 md:px-16 sm:py-8">
       <div className='relative w-full max-w lg'>
         <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-60 animate-blob "></div>
         <div className="absolute top-0 -right-4 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
@@ -174,12 +174,12 @@ const ImageCaptionGenerator = () => {
               />
               <button
                 type="button"
-                className="button"
+                className="button mt-6"
                 data-twe-ripple-init
                 data-twe-ripple-color="light"
                 onClick={() => document.getElementById('hidden-input').click()}
               >
-                Upload a file
+                Choose files
               </button>
             </div>
 
@@ -195,7 +195,6 @@ const ImageCaptionGenerator = () => {
                   <img
                     className="mx-auto w-32"
                     src="https://user-images.githubusercontent.com/507615/54591670-ac0a0180-4a65-11e9-846c-e55ffce0fe7b.png"
-                    alt="no data"
                   />
                   <span className="text-small text-gray-500">No files selected</span>
                 </li>
@@ -231,9 +230,7 @@ const ImageCaptionGenerator = () => {
                               </svg>
                             </i>
                           </span>
-                          <p className="p-1 size text-xs">
-                            {getFileSize(FILES[url]?.size)}
-                          </p>
+                          
                           <button
                             className="delete ml-auto focus:outline-none hover:bg-gray-300 p-1 rounded-md"
                             onClick={() => handleDelete(url)}
@@ -284,20 +281,19 @@ const ImageCaptionGenerator = () => {
       {showResult && (
         <section className="my-20 flex flex-col w-fit mx-auto my-10 md:px-14 px-4 max-w-screen-2xl sm:px-8 md:px-16 sm:py-8">
           <h2 className="text-lg font-semibold">Your captions here!</h2>
-          <div className="product-card grid grid-cols-1 md:grid-cols-2 gap-10 py-12 lg:pb-8 lg:pt-10 ">
+          <div className=" grid grid-cols-1 md:grid-cols-2 gap-10 py-12 lg:pb-8 lg:pt-10 ">
             {captions.map((caption, index) => (
               <li key={index} className="list-none">
                 <div className="max-w-sm rounded overflow-hidden shadow-lg px-4 py-6 border border-transparent hover:border-secondary hover:shadow-lg transition duration-300 ease-in-out">
                   <img className="w-full h-[220px] object-cover rounded-md rounded-lg" src={myUrls[index]} />
-                  <div className="px-6 py-4 h-[180px]">
+                  <div className=" py-4 h-[150px]">
                     <div className="font-bold text-xl mb-2">The Caption</div>
                     <p className="text-gray-700 text-base break-words">
                       {caption}
                     </p>
                   </div>
 
-                  
-                  <div className="px-6 py-4">
+                  <div className="py-4">
                     <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 hover:text-secondary transition-colors duration-300">#photography</span>
                     <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 hover:text-secondary transition-colors duration-300">#sport</span>
                     <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 hover:text-secondary transition-colors duration-300">#caption</span>
@@ -305,15 +301,6 @@ const ImageCaptionGenerator = () => {
                 </div>
               </li>
             ))}
-
-          
-
-
-      
-
-
-      
-
           </div>
         </section>
 

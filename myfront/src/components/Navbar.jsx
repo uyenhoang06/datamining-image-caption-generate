@@ -27,7 +27,7 @@ const Navbar = () => {
     return (
         <header className='w-full bg-transparent fixed top-0 right-0 left-0'>
 
-            <nav  className='bg-white md:px-14 p-4 max-w-screen-2xl border-b mx-auto text-primary fixed top-0 right-0 left-0'>
+            <nav  className='bg-white md:px-14 p-4 max-w-screen-2xl border-b mx-auto text-primary fixed top-0 right-0 left-0 bg-opacity-80'>
                 <div className=' text-center text-lg container mx-auto flex justify-between items-center front-medium'>
                     <div className='flex space-x-14 justify-between items-center'>
                         <a href="/" className='text-2xl font-semibold flex items-center space-x-3'>
@@ -69,6 +69,7 @@ const Navbar = () => {
                             <a href="/">Menu</a>
                         </li>
                 <li  className='list-none block text-white hover:text-gray-300 block hover:text-secondary'>  <a href="/upload">Upload</a></li>
+                <li  className='list-none block text-white hover:text-gray-300 block hover:text-secondary'>  <a href="/about">About Us</a></li>
             </ul>
         </div>
         </header>

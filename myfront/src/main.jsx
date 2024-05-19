@@ -3,9 +3,8 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 
-import UploadImg from './components/UploadImg.jsx';
+import UploadImg from './UploadImg.jsx';
 import AboutUs from './AboutUs.jsx';
-
 
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
