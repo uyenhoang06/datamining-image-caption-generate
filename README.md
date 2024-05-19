@@ -21,6 +21,7 @@ Start by cloning the repository to your local machine using:
 
 ### Step 2: Backend set up 
   `pip install -r requirements.txt`
+  
   `python app.py`
 
 
