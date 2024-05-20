@@ -9,7 +9,6 @@ Before you begin, ensure you have met the following requirements:
 - [npm](https://www.npmjs.com/get-npm)
 
 
-pip install requirements.txt
 
 ## Installation
 
