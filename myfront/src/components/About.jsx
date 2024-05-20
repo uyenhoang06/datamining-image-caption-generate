@@ -63,8 +63,8 @@ const About = () => {
                     viewport={{once:false, amount:0.7}} 
                     className='w-full lg:w-1/2 md:order-1 pl-10 relative z-10 white-text'> 
                     <h2 className='md:text-4xl text-3xl font-bold text-primary mb-5 leading-normal'> Our project for  <span className='text-secondary'> Dataming course.</span></h2>
-                    <p className='text-tartiary text-lg mb-7'>We use algorithm</p>
-                    <button className='button'>Try it!</button>
+                    <p className='text-tartiary text-lg mb-7'>To evaluate model quality, our team utilizes the BLEU Score. When employing the attention mechanism, the BLEU Score significantly improves. Please contact us for further insights.</p>
+                    <button className='button'> <a href="/upload">Try it!</a></button>
                 </motion.div>
             </div>
         </div>
