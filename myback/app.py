@@ -37,21 +37,25 @@ def allowed_file(filename):
 
 
 def predict_caption(image):
-    img = Image.open(image)
+    try:
+        img = Image.open(image)
 
-    model = VisionEncoderDecoderModel.from_pretrained(
-        "nlpconnect/vit-gpt2-image-captioning")
-    image_processor = ViTImageProcessor.from_pretrained(
-        "nlpconnect/vit-gpt2-image-captioning")
-    tokenizer = GPT2TokenizerFast.from_pretrained(
-        "nlpconnect/vit-gpt2-image-captioning")
+        model = VisionEncoderDecoderModel.from_pretrained(
+            "nlpconnect/vit-gpt2-image-captioning")
+        image_processor = ViTImageProcessor.from_pretrained(
+            "nlpconnect/vit-gpt2-image-captioning")
+        tokenizer = GPT2TokenizerFast.from_pretrained(
+            "nlpconnect/vit-gpt2-image-captioning")
 
-    pixel_values = image_processor(img, return_tensors="pt").pixel_values
-    generated_ids = model.generate(pixel_values, max_new_tokens=30)
-    caption = tokenizer.batch_decode(
-        generated_ids, skip_special_tokens=True)[0]
+        pixel_values = image_processor(img, return_tensors="pt").pixel_values
+        generated_ids = model.generate(pixel_values, max_new_tokens=30)
+        caption = tokenizer.batch_decode(
+            generated_ids, skip_special_tokens=True)[0]
 
-    return caption
+        return caption
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return "This image is not supported!"
 
 
 @app.route('/')

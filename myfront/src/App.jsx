@@ -1,39 +1,24 @@
 import './App.css'
-import Topic from './components/Topic.jsx'
-import Home from './components/Home.jsx'
-import Navbar from './components/Navbar.jsx'
-import Footer  from './components/Footer.jsx'
-import About  from './components/About.jsx'
-import Pricing  from './components/Pricing.jsx'
-import SlideImage from './components/SlideImage.jsx';
+import './index.css'
+
+import React from 'react'
+
+import HomePage from './HomePage.jsx'
+import UploadImg from './UploadImg.jsx';
+import AboutUs from './AboutUs.jsx';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 
-import {useEffect } from "react";
-
-
-function App() {
-
-  useEffect(
-    ()=>{
-        fetch("http://127.0.0.1:5000/")
-        .then(response=> response.json())
-        .then(data=> {
-          console.log(data)
-        })
-
-    },[]
-
-  )
+const App = () => {
   return (
-    <div>
-      <Navbar/>
-      <SlideImage/>
-      <Topic/>
-      <About/>
-      <Pricing/>
-      <Footer/>
-    </div>
+    <Router>
+        <Routes>
+          <Route exact path="/" element={<HomePage/>} />
+          <Route exact path="/upload" element={<UploadImg/>} />
+          <Route exact path="/about" element={<AboutUs/>} />
+        </Routes>
+    </Router>
   )
 }
 
-export default App
+export default App;

@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import axios from 'axios';
+
+import print from '../assets/print.png';
 
 const ImageCaptionGenerator = () => {
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -10,6 +12,8 @@ const ImageCaptionGenerator = () => {
   const [FILES, setFILES] = useState({});
   const [myUrls, setMyUrls] = useState([]);
   const [showResult, setShowResult] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const abortControllerRef = useRef(null);
 
   const isImageFile = (file) => {
     const allowedExtensions = ['jpg', 'jpeg', 'png'];
@@ -18,9 +22,7 @@ const ImageCaptionGenerator = () => {
   };
 
   const addFile = (file) => {
-    const allowedExtensions = ['jpg', 'jpeg', 'png'];
-    const fileExtension = file.name.split('.').pop().toLowerCase();
-    if (!allowedExtensions.includes(fileExtension)) {
+    if (!isImageFile(file)) {
       alert("Please upload an image file.");
       return;
     }
@@ -32,21 +34,29 @@ const ImageCaptionGenerator = () => {
   };
 
   const handleImageChange = (event) => {
-    const files = Array.from(event.target.files);
+  if (isLoading) {
+    alert("Please wait until the current process is complete or click 'Cancel' to stop the upload.");
+    return;
+  }
 
-    files.forEach((file) => {
-      if (!isImageFile(file)) {
-        alert("Please upload an image file.");
-        return;
-      }
+  const files = Array.from(event.target.files);
 
-      const objectURL = URL.createObjectURL(file);
-      setSelectedFiles((prevFiles) => [...prevFiles, file]);
-      setPreviewUrls((prevUrls) => [...prevUrls, objectURL]);
-    });
+  files.forEach((file) => {
+    if (!isImageFile(file)) {
+      alert("Please upload an image file.");
+      return;
+    }
 
-    setShowResult(false);
-  };
+    const objectURL = URL.createObjectURL(file);
+    setSelectedFiles((prevFiles) => [...prevFiles, file]);
+    setPreviewUrls((prevUrls) => [...prevUrls, objectURL]);
+    setFILES((prevFiles) => ({ ...prevFiles, [objectURL]: file }));
+  });
+
+  setShowResult(false);
+  event.target.value = '';
+
+};
 
   const handleDelete = (objectURL) => {
     const fileIndex = previewUrls.indexOf(objectURL);
@@ -54,6 +64,7 @@ const ImageCaptionGenerator = () => {
     setSelectedFiles((prevFiles) =>
       prevFiles.filter((_, index) => index !== fileIndex)
     );
+    
     setPreviewUrls((prevUrls) => prevUrls.filter((_, index) => index !== fileIndex));
     setFILES((prevFiles) => {
       const newFiles = { ...prevFiles };
@@ -61,50 +72,79 @@ const ImageCaptionGenerator = () => {
       return newFiles;
     });
 
+    URL.revokeObjectURL(objectURL);
+
+
     setCaptions((prevCaptions) => prevCaptions.filter((_, index) => index !== fileIndex));
     setMyUrls((prevUrls) => prevUrls.filter((_, index) => index !== fileIndex));
     setShowResult(false);
   };
 
   const handleGenerateCaption = async () => {
-    if (!selectedFiles.length) {
-      alert('Please select a file');
-      return;
+  if (!selectedFiles.length) {
+    alert('Please select a file');
+    return;
+  }
+
+  if (isLoading) {
+    alert("Your images are being generated with captions. Please wait a few seconds!");
+    return;
+  }
+
+  setIsLoading(true);
+  setUploadStatus("");
+
+  const formData = new FormData();
+  selectedFiles.forEach((file) => formData.append('file', file));
+
+  abortControllerRef.current = new AbortController();
+
+  try {
+    const response = await axios.post('http://127.0.0.1:5000/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      signal: abortControllerRef.current.signal,
+    });
+
+    if (response.status === 201) {
+      setUploadStatus('Upload successful');
+      setCaptions(response.data.captions);
+      setShowResult(true);
+      setMyUrls(previewUrls);
+      setPreviewUrls([]);
+      setSelectedFiles([]);
+      setFILES({});
+    } else {
+      setUploadStatus('Upload failed');
     }
-
-    const formData = new FormData();
-    selectedFiles.forEach((file) => formData.append('file', file));
-
-    try {
-      const response = await axios.post('http://127.0.0.1:5000/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-
-      if (response.status === 201) {
-        setUploadStatus('Upload successful');
-        setCaptions(response.data.captions);
-        setShowResult(true);
-        setMyUrls(previewUrls);
-        setPreviewUrls([]);
-        setSelectedFiles([]);
-      } else {
-        setUploadStatus('Upload failed');
-      }
-    } catch (error) {
+  } catch (error) {
+    if (axios.isCancel(error)) {
+      setUploadStatus('Upload cancelled');
+    } else {
       console.error('Error uploading file:', error);
       setUploadStatus('Upload failed');
     }
-  };
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   const handleCancel = () => {
+    if (isLoading && abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+
     setSelectedFiles([]);
     setPreviewUrls([]);
     setCaptions([]);
     setUploadStatus("");
     setFILES({});
     setShowResult(false);
+    setIsLoading(false);
+    setCounter(0);
+    setMyUrls([]);
+    abortControllerRef.current = null;
   };
 
   const dropHandler = (ev) => {
@@ -132,16 +172,6 @@ const ImageCaptionGenerator = () => {
 
   const dragOverHandler = (e) => {
     e.preventDefault();
-  };
-
-  const getFileSize = (size) => {
-    if (size > 1048576) {
-      return Math.round(size / 1048576) + "mb";
-    } else if (size > 1024) {
-      return Math.round(size / 1024) + "kb";
-    } else {
-      return size + "b";
-    }
   };
 
   return (
@@ -172,12 +202,19 @@ const ImageCaptionGenerator = () => {
                 className="hidden"
                 onChange={handleImageChange}
               />
+
               <button
                 type="button"
                 className="button mt-6"
                 data-twe-ripple-init
                 data-twe-ripple-color="light"
-                onClick={() => document.getElementById('hidden-input').click()}
+                onClick={() => {
+                  if (!isLoading) {
+                    document.getElementById('hidden-input').click();
+                  } else {
+                    alert("Please wait until the current process is complete or click 'Cancel' to stop the upload.");
+                  }
+                }}
               >
                 Choose files
               </button>
@@ -192,10 +229,7 @@ const ImageCaptionGenerator = () => {
                   id="empty"
                   className="h-full w-full text-center flex flex-col items-center justify-center"
                 >
-                  <img
-                    className="mx-auto w-32"
-                    src="https://user-images.githubusercontent.com/507615/54591670-ac0a0180-4a65-11e9-846c-e55ffce0fe7b.png"
-                  />
+                  <img className="mx-auto w-32" src={print}/>
                   <span className="text-small text-gray-500">No files selected</span>
                 </li>
               ) : (
@@ -226,12 +260,11 @@ const ImageCaptionGenerator = () => {
                                 height="24"
                                 viewBox="0 0 24 24"
                               >
-                                <path d="M15 2v5h5v15h-16v-20h11zm1-2h-14v24h20v-18l-6-6z" />
+                                <path d="M5 8.5c0-1.105.895-2 2-2h10c1.105 0 2 .895 2 2v9.5c0 1.105-.895 2-2 2h-10c-1.105 0-2-.895-2-2v-9.5zm2-3.5c-1.657 0-3 1.343-3 3v9.5c0 1.657 1.343 3 3 3h10c1.657 0 3-1.343 3-3v-9.5c0-1.657-1.343-3-3-3h-10zm6 8.5h2.003c.553 0 .997-.444.997-.997s-.444-.997-.997-.997h-2.003v-2.003c0-.553-.444-.997-.997-.997s-.997.444-.997.997v2.003h-2.003c-.553 0-.997.444-.997.997s.444.997.997.997h2.003v2.003c0 .553.444.997.997.997s.997-.444.997-.997v-2.003z" />
                               </svg>
                             </i>
                           </span>
-                          
-                          <button
+                           <button
                             className="delete ml-auto focus:outline-none hover:bg-gray-300 p-1 rounded-md"
                             onClick={() => handleDelete(url)}
                           >
@@ -257,13 +290,13 @@ const ImageCaptionGenerator = () => {
             </ul>
           </section>
 
-          <footer className="flex justify-end px-8 pb-8 pt-4">
+         <footer className="flex justify-end px-8 pb-8 pt-4">
             <button
               id="submit"
               className="button"
               onClick={handleGenerateCaption}
             >
-              Upload
+            {isLoading ? 'Uploading...' : 'Upload'}
             </button>
             <button
               id="cancel"
@@ -273,10 +306,11 @@ const ImageCaptionGenerator = () => {
               Cancel
             </button>
           </footer>
+
         </article>
       </main>
       </div>
-      
+
 
       {showResult && (
         <section className="my-20 flex flex-col w-fit mx-auto my-10 md:px-14 px-4 max-w-screen-2xl sm:px-8 md:px-16 sm:py-8">
@@ -303,7 +337,6 @@ const ImageCaptionGenerator = () => {
             ))}
           </div>
         </section>
-
       )}
     </div>
   );
